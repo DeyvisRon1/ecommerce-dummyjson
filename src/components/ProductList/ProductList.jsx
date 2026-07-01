@@ -1,7 +1,7 @@
 import ProductCard from '../ProductCard/ProductCard';
 import './ProductList.css';
 
-function ProductList({ products }) {
+function ProductList({ products, onAddToCart }) {
   if (products.length === 0) {
     return <p>No se encontraron productos.</p>;
   }
@@ -9,7 +9,11 @@ function ProductList({ products }) {
   return (
     <div className="product-list">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          onAddToCart={onAddToCart}
+        />
       ))}
     </div>
   );

@@ -1,0 +1,9 @@
+.App__body {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 1rem;
+}
+.App__body .product-list {
+  flex: 1;
+}

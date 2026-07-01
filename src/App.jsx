@@ -4,6 +4,8 @@ import { getCategories } from './services/api';
 import ProductList from './components/ProductList/ProductList';
 import SearchBar from './components/SearchBar/SearchBar';
 import FilterBar from './components/FilterBar/FilterBar';
+import Navbar from './components/Navbar/Navbar';
+import Cart from './components/Cart/Cart';
 import './App.css';
 
 function App() {
@@ -11,6 +13,7 @@ function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     getCategories().then(setCategories);
@@ -22,12 +25,20 @@ function App() {
       .filter((p) => (category ? p.category === category : true));
   }, [products, search, category]);
 
+  function handleAddToCart(product) {
+    setCartItems((prev) => [...prev, product]);
+  }
+
+  function handleRemoveFromCart(index) {
+    setCartItems((prev) => prev.filter((_, i) => i !== index));
+  }
+
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>Ocurrió un error: {error}</p>;
 
   return (
     <div className="App">
-      <h1>Mi E-commerce</h1>
+      <Navbar cartCount={cartItems.length} />
       <div className="App__controls">
         <SearchBar value={search} onChange={setSearch} />
         <FilterBar
@@ -36,7 +47,10 @@ function App() {
           onSelect={setCategory}
         />
       </div>
-      <ProductList products={filteredProducts} />
+      <div className="App__body">
+        <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
+        <Cart items={cartItems} onRemove={handleRemoveFromCart} />
+      </div>
     </div>
   );
 }

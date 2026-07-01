@@ -1,9 +1,10 @@
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ cartCount }) {
   return (
     <nav className="navbar">
-      <p>Navbar</p>
+      <span className="navbar__logo">Mi E-commerce</span>
+      <span className="navbar__cart">🛒 {cartCount}</span>
     </nav>
   );
 }
