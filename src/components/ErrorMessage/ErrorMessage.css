@@ -1,0 +1,10 @@
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #d62828;
+}
+
+.error-message__detail {
+  font-size: 0.85rem;
+  color: #888;
+}

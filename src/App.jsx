@@ -4,8 +4,11 @@ import { getCategories } from './services/api';
 import ProductList from './components/ProductList/ProductList';
 import SearchBar from './components/SearchBar/SearchBar';
 import FilterBar from './components/FilterBar/FilterBar';
-import Navbar from './components/Navbar/Navbar';
+import Header from './components/Header/Header';
 import Cart from './components/Cart/Cart';
+import Loader from './components/Loader/Loader';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import Footer from './components/Footer/Footer';
 import './App.css';
 
 function App() {
@@ -33,12 +36,9 @@ function App() {
     setCartItems((prev) => prev.filter((_, i) => i !== index));
   }
 
-  if (loading) return <p>Cargando productos...</p>;
-  if (error) return <p>Ocurrió un error: {error}</p>;
-
   return (
     <div className="App">
-      <Navbar cartCount={cartItems.length} />
+      <Header cartCount={cartItems.length} />
       <div className="App__controls">
         <SearchBar value={search} onChange={setSearch} />
         <FilterBar
@@ -47,10 +47,18 @@ function App() {
           onSelect={setCategory}
         />
       </div>
-      <div className="App__body">
-        <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
-        <Cart items={cartItems} onRemove={handleRemoveFromCart} />
-      </div>
+
+      {loading && <Loader />}
+      {error && <ErrorMessage message={error} />}
+
+      {!loading && !error && (
+        <div className="App__body">
+          <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
+          <Cart items={cartItems} onRemove={handleRemoveFromCart} />
+        </div>
+      )}
+
+      <Footer />
     </div>
   );
 }
