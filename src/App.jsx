@@ -1,4 +1,5 @@
 import { useProducts } from './hooks/useProducts';
+import ProductList from './components/ProductList/ProductList';
 import './App.css';
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <h1>Mi E-commerce</h1>
-      <p>Productos cargados: {products.length}</p>
+      <ProductList products={products} />
     </div>
   );
 }
