@@ -1,10 +1,19 @@
 import './FilterBar.css';
 
-function FilterBar() {
+function FilterBar({ categories, selected, onSelect }) {
   return (
-    <div className="filter-bar">
-      <p>Filter Bar</p>
-    </div>
+    <select
+      className="filter-bar"
+      value={selected}
+      onChange={(e) => onSelect(e.target.value)}
+    >
+      <option value="">Todas las categorías</option>
+      {categories.map((cat) => (
+        <option key={cat.slug} value={cat.slug}>
+          {cat.name}
+        </option>
+      ))}
+    </select>
   );
 }
 
